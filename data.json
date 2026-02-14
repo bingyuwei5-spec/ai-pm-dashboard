@@ -1,0 +1,101 @@
+{
+  "update_time": "2026年2月14日 10:30",
+  "news": [
+    {
+      "title": "DeepSeek R1震撼AI市场",
+      "summary": "中国DeepSeek发布R1推理模型，训练成本仅为竞品的1/10，引发全球AI成本革命。这标志着'更大模型=更好性能'范式的终结。",
+      "priority": "high",
+      "tags": ["模型创新", "成本优化"],
+      "date": "2025年1月"
+    },
+    {
+      "title": "AI Agent进入生产环境",
+      "summary": "OpenAI推出Operator半自主AI助手。Deloitte报告显示企业级AI ROI达标率已达74%，AI从实验阶段进入规模化应用。",
+      "priority": "high",
+      "tags": ["AI Agent", "企业应用"],
+      "date": "2026年1月"
+    },
+    {
+      "title": "推理模型性能飞跃",
+      "summary": "新一代AI模型在复杂推理任务中表现突破，一年内得分从5%提升至29-37%，增长4-9倍。推理能力成为新的竞争焦点。",
+      "priority": "medium",
+      "tags": ["模型能力", "推理突破"],
+      "date": "2025年12月"
+    },
+    {
+      "title": "开源AI主导权转移",
+      "summary": "中国公司主导开源模型发展，迫使OpenAI跟进发布开源版本。开源成为AI研究和创新的主要引擎。",
+      "priority": "medium",
+      "tags": ["开源", "市场格局"],
+      "date": "2026年1月"
+    },
+    {
+      "title": "多模态AI能力增强",
+      "summary": "Google Gemini 2.0支持实时视频理解，可以像人类一样观看和理解视频内容。多模态成为AI发展新方向。",
+      "priority": "medium",
+      "tags": ["多模态", "视频理解"],
+      "date": "2025年12月"
+    }
+  ],
+  "cases": [
+    {
+      "title": "Bechtel：AI优化多项目资源分配",
+      "company": "Bechtel Corporation",
+      "industry": "建筑工程",
+      "description": "全球建筑巨头使用AI分析多个并行项目的资源需求，动态优化人员、设备和材料的分配。系统考虑项目优先级、资源技能匹配、时区差异等因素。",
+      "impact": [
+        "项目成本节省10%",
+        "资源利用率提升15%",
+        "交付延迟减少20%"
+      ]
+    },
+    {
+      "title": "McDonald's：AI驱动项目管理平台",
+      "company": "McDonald's UAE",
+      "industry": "连锁餐饮",
+      "description": "麦当劳迁移到Celoxis AI平台，实现项目数据集中化管理。AI自动生成状态报告、识别瓶颈、推荐最优资源配置。",
+      "impact": [
+        "项目交付速度提升30%",
+        "报告时间减少70%",
+        "跨部门协作效率提升40%"
+      ]
+    },
+    {
+      "title": "IBM Watson：IT项目风险预测",
+      "company": "IBM",
+      "industry": "IT服务",
+      "description": "IBM使用Watson分析历史IT项目数据，建立风险预测模型。系统能提前3-6周预警成本超支、进度延迟、资源短缺等问题。",
+      "impact": [
+        "IT项目成本超支减少20%",
+        "进度准确性提升35%",
+        "客户满意度提升25%"
+      ]
+    },
+    {
+      "title": "中建：AI实时质量控制",
+      "company": "中国建筑工程总公司",
+      "industry": "建筑工程",
+      "description": "部署AI视觉系统实时监控施工质量。系统自动识别不符合规范的施工行为、材料缺陷、安全隐患，立即通知项目经理。",
+      "impact": [
+        "返工率减少18%",
+        "安全事故下降30%",
+        "质检效率提升50%"
+      ]
+    },
+    {
+      "title": "Teamwork.com：AI自动化项目管理",
+      "company": "Teamwork.com",
+      "industry": "SaaS平台",
+      "description": "集成AI功能：自动生成任务列表、总结会议纪要、填充时间表、预测项目完成时间。用户用自然语言即可创建和管理项目。",
+      "impact": [
+        "任务创建时间减少60%",
+        "文档整理时间节省80%",
+        "新手上手时间缩短50%"
+      ]
+    }
+  ],
+  "stats": {
+    "news_count": 5,
+    "case_count": 5
+  }
+}
