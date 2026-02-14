@@ -1,0 +1,51 @@
+name: 每日更新AI+项目管理信息面板
+
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v3
+    
+    - name: 设置 Python 环境
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: 安装依赖
+      run: |
+        pip install --upgrade pip
+        pip install openai requests
+    
+    - name: 收集内容
+      env:
+        QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
+      run: |
+        python collect_content.py
+    
+    - name: 生成网页
+      run: |
+        python generate_html.py
+    
+    - name: 提交更新
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/
+        git add data.json
+        git diff --quiet && git diff --staged --quiet || git commit -m "🤖 自动更新: $(date +'%Y-%m-%d %H:%M')"
+        git push
+    
+    - name: 部署到 GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
+        publish_branch: gh-pages
+```
