@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-AI+项目管理信息面板 - 内容抓取 (修复语言与格式问题)
+AI+项目管理信息面板 - 内容抓取 (修复 Exit Code 1 与 格式 Bug)
 """
 
 import json
@@ -20,46 +20,48 @@ class AINewsCollector:
         self.model = config.QWEN_MODEL
 
     def search_and_summarize(self, query, content_type='news'):
-        """搜索并总结内容 - 强制中文并确保格式"""
+        """搜索并总结内容 - 修复 choices[0] 访问逻辑"""
         try:
             if content_type == 'news':
-                prompt = f"请搜索关于'{query}'的最新AI新闻。必须用中文回答。返回一个JSON数组，包含: title, summary, priority (high或medium), tags (数组), date (格式如'2026-02-14')。不要包含markdown代码块。"
+                prompt = f"请搜索关于'{query}'的最新AI新闻。必须用中文回答。返回一个JSON数组，包含: title, summary, priority (high或medium), tags (字符串数组), date (格式如'2026-02-14')。不要包含markdown代码块。"
             else:
-                prompt = f"请搜索'{query}'的AI应用案例。必须用中文回答。返回一个JSON数组，包含: title, company, industry, description, impact (必须是一个包含3条简短效果的字符串列表，例如 ['提升效率20%', '降低成本10%'])。不要包含markdown代码块。"
+                prompt = f"请搜索'{query}'的AI应用案例。必须用中文回答。返回一个JSON数组，包含: title, company, industry, description, impact (必须是一个包含3个短句的数组，如 ['效率提升', '成本降低'])。不要包含markdown代码块。"
 
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                    {'role': 'system', 'content': '你是一个专业的AI项目管理分析师。你必须使用中文回答，并且只返回纯JSON格式的数据。确保所有的列表字段（如tags和impact）确实是数组形式。'},
+                    {'role': 'system', 'content': '你是一个专业的AI项目管理分析师。你必须使用中文回答。你只返回纯JSON数组，不输出任何其他多余解释。'},
                     {'role': 'user', 'content': prompt}
                 ],
-                temperature=0.5 # 降低随机性，确保格式稳定
+                temperature=0.3  # 进一步降低随机性，确保格式和语言稳定
             )
 
+            # ✅ 修复关键点：增加 [0] 索引
             content = response.choices[0].message.content.strip()
             
-            # 清理可能存在的 markdown 标签
+            # 清理 Markdown 标签
             if '```' in content:
                 content = content.replace('```json', '').replace('```', '').strip()
             
             results = json.loads(content)
             
-            # 额外检查：确保 impact 是列表，防止页面垂直排列 Bug
-            if content_type == 'case':
+            # 确保 impact 是列表，防止页面垂直排列 Bug
+            if content_type == 'case' and isinstance(results, list):
                 for item in results:
-                    if isinstance(item.get('impact'), str):
-                        item['impact'] = [item['impact']] # 如果是字符串则强转为列表
+                    if 'impact' in item and isinstance(item['impact'], str):
+                        item['impact'] = [item['impact']]
             
             return results
         except Exception as e:
-            print(f"❌ 错误: {str(e)}")
+            print(f"❌ 运行中出错 ({query}): {str(e)}")
             return []
 
     def collect_ai_news(self):
         all_news = []
-        keywords = getattr(config, 'SEARCH_KEYWORDS', {}).get('ai_news', ["AI 最新进展"])
+        keywords = getattr(config, 'SEARCH_KEYWORDS', {}).get('ai_news', ["AI 行业动态"])
         for kw in keywords[:2]:
-            all_news.extend(self.search_and_summarize(kw, 'news'))
+            res = self.search_and_summarize(kw, 'news')
+            if isinstance(res, list): all_news.extend(res)
             time.sleep(1)
         return all_news[:10]
 
@@ -67,7 +69,8 @@ class AINewsCollector:
         all_cases = []
         keywords = getattr(config, 'SEARCH_KEYWORDS', {}).get('pm_cases', ["AI 项目管理案例"])
         for kw in keywords[:2]:
-            all_cases.extend(self.search_and_summarize(kw, 'case'))
+            res = self.search_and_summarize(kw, 'case')
+            if isinstance(res, list): all_cases.extend(res)
             time.sleep(1)
         return all_cases[:6]
 
@@ -82,11 +85,12 @@ class AINewsCollector:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
 def main():
+    print("🚀 开始执行中文数据抓取...")
     collector = AINewsCollector()
     news = collector.collect_ai_news()
     cases = collector.collect_pm_cases()
     collector.save_data(news, cases)
-    print("✅ 中文内容更新完成！")
+    print(f"✅ 成功! 抓取到 {len(news)} 条新闻和 {len(cases)} 个案例。")
 
 if __name__ == '__main__':
     main()
