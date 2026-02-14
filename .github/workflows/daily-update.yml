@@ -5,6 +5,11 @@ on:
     - cron: '30 2 * * *'
   workflow_dispatch:
 
+# 必须添加权限，否则 Action 无法把更新后的 HTML 推送到仓库
+permissions:
+  contents: write
+  pages: write
+
 jobs:
   update-dashboard:
     runs-on: ubuntu-latest
@@ -25,6 +30,7 @@ jobs:
     
     - name: 收集内容
       env:
+        # 请确保你在 GitHub Settings > Secrets 里配置的名字叫 QWEN_API_KEY
         QWEN_API_KEY: ${{ secrets.QWEN_API_KEY }}
       run: |
         python collect_content.py
@@ -39,8 +45,8 @@ jobs:
         git config --local user.name "GitHub Action"
         git add docs/
         git add data.json
-        git diff --quiet && git diff --staged --quiet || git commit -m "🤖 自动更新: $(date +'%Y-%m-%d %H:%M')"
-        git push
+        # 只有在有变动时才提交，防止 Action 报错
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 自动更新: $(date +'%Y-%m-%d %H:%M')" && git push)
     
     - name: 部署到 GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
