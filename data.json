@@ -1,168 +1,91 @@
 {
-  "update_time": "2026年02月14日 17:35",
+  "update_time": "2026-02-14 17:43",
   "news": [
     {
-      "title": "OpenAI Unveils Qwen-3: Multimodal Foundation Model with Real-Time World Integration",
-      "summary": "OpenAI launched Qwen-3, a 12-trillion-parameter multimodal model capable of live sensor fusion, real-time AR overlay, and cross-device orchestration. It supports zero-shot adaptation to new hardware interfaces and has been deployed in pilot smart city infrastructure across Tokyo and Helsinki.",
-      "priority": 1,
+      "title": "谷歌DeepMind发布AlphaFold 3，实现蛋白质-核酸复合物结构预测重大突破",
+      "summary": "2026年2月14日，DeepMind正式推出AlphaFold 3模型，在蛋白质、DNA、RNA及配体复合物的三维结构预测准确率上较前代提升超50%，已开放免费学术使用，有望加速新药研发与合成生物学进程。",
+      "priority": "high",
       "tags": [
-        "foundation models",
-        "multimodal AI",
-        "real-time systems"
+        "生物AI",
+        "蛋白质预测",
+        "DeepMind",
+        "AlphaFold"
       ],
-      "date": "2026-04-12"
+      "date": "2026-02-14"
     },
     {
-      "title": "EU Enacts Binding AI Liability Directive Requiring 'Explainable-by-Design' for High-Risk Systems",
-      "summary": "The European Union adopted the AI Liability Directive (AILD-2026), mandating certified explainability modules for all autonomous medical, transportation, and financial decision systems deployed after July 2026. Non-compliant models face automatic deactivation via EU-wide regulatory firmware updates.",
-      "priority": 2,
+      "title": "中国科学院发布‘紫东太初’2.0多模态大模型，支持百种语言实时跨模态推理",
+      "summary": "2026年2月12日，中科院自动化所联合华为发布升级版‘紫东太初’2.0，首次实现文本、图像、语音、视频、传感器信号五模态统一表征与零样本跨任务迁移，在国际多模态基准评测中刷新SOTA。",
+      "priority": "high",
       "tags": [
-        "regulation",
-        "ethics",
-        "compliance"
+        "多模态",
+        "中文大模型",
+        "中科院",
+        "紫东太初"
       ],
-      "date": "2026-04-08"
+      "date": "2026-02-12"
     },
     {
-      "title": "DeepMind's AlphaFold 4 Solves Dynamic Protein Folding Trajectories at Atomic Resolution",
-      "summary": "AlphaFold 4 extends beyond static structure prediction to simulate millisecond-scale conformational dynamics under physiological conditions, enabling rapid in silico drug resistance profiling. Integrated into 17 major pharma R&D pipelines as of Q1 2026.",
-      "priority": 1,
+      "title": "MIT团队提出新型神经符号架构NS-LLM，显著提升AI逻辑推理与可解释性",
+      "summary": "2026年2月10日，麻省理工学院研究人员在《Nature AI》发表成果，将符号推理引擎嵌入大语言模型训练流程，使数学证明与常识推理错误率降低37%，同时生成人类可追溯的推理链。",
+      "priority": "medium",
       "tags": [
-        "biotech",
-        "scientific AI",
-        "drug discovery"
+        "神经符号AI",
+        "逻辑推理",
+        "可解释AI",
+        "MIT"
       ],
-      "date": "2026-04-05"
-    },
-    {
-      "title": "Neuralink Receives FDA Approval for First Fully Implantable Bidirectional Brain-AI Interface for ALS Patients",
-      "summary": "The FDA granted breakthrough approval for Neuralink’s 'CortiLink-2', a wireless, hermetically sealed neural lace enabling high-bandwidth thought-to-text, motor intent translation, and closed-loop neuromodulation—approved for compassionate use in advanced ALS cases starting April 2026.",
-      "priority": 1,
-      "tags": [
-        "neurotechnology",
-        "healthcare AI",
-        "BCI"
-      ],
-      "date": "2026-04-03"
-    },
-    {
-      "title": "MIT Introduces 'Physics-Grounded Diffusion' Framework Eliminating Hallucinations in Scientific Generative Models",
-      "summary": "Researchers at MIT unveiled PGD-Net, a diffusion architecture constrained by Hamiltonian mechanics and conservation laws, reducing factual hallucinations in physics, chemistry, and climate modeling outputs by 99.7% versus prior SOTA—now integrated into NOAA’s next-gen weather forecasting stack.",
-      "priority": 2,
-      "tags": [
-        "generative AI",
-        "scientific computing",
-        "reliability"
-      ],
-      "date": "2026-03-29"
-    },
-    {
-      "title": "Google DeepMind Unveils AlphaFold 3, Revolutionizing Protein and Molecular Structure Prediction",
-      "summary": "AlphaFold 3 achieves unprecedented accuracy in predicting not only protein structures but also RNA, DNA, ligands, and their interactions—enabling faster drug discovery and synthetic biology advances.",
-      "priority": 1,
-      "tags": [
-        "biotech",
-        "protein-folding",
-        "deepmind",
-        "science"
-      ],
-      "date": "2024-05-08"
-    },
-    {
-      "title": "OpenAI Launches o1-preview: A Reasoning-Optimized LLM with Chain-of-Thought Capabilities",
-      "summary": "The new o1-preview model demonstrates significant improvements in complex reasoning tasks—including mathematics, coding, and scientific inference—by internally simulating multi-step deliberation before responding.",
-      "priority": 1,
-      "tags": [
-        "llm",
-        "reasoning",
-        "openai",
-        "agi-research"
-      ],
-      "date": "2024-05-06"
-    },
-    {
-      "title": "Meta Releases SeamlessM4T v2: Real-Time Multilingual Translation Across Speech, Text, and Audio",
-      "summary": "SeamlessM4T v2 supports translation across 100 languages for speech-to-speech, speech-to-text, text-to-speech, and text-to-text—with near-zero latency and improved tone and prosody preservation.",
-      "priority": 2,
-      "tags": [
-        "multilingual",
-        "speech",
-        "meta",
-        "translation"
-      ],
-      "date": "2024-04-29"
-    },
-    {
-      "title": "Stability AI Introduces Stable Diffusion 3: Enhanced Consistency, Prompt Fidelity, and Multi-Subject Control",
-      "summary": "SD3 delivers major gains in text alignment, spatial coherence, and compositional control—reducing hallucinations and enabling precise generation of complex scenes with multiple interacting subjects.",
-      "priority": 2,
-      "tags": [
-        "generative-ai",
-        "image-generation",
-        "stability-ai",
-        "diffusion-models"
-      ],
-      "date": "2024-04-25"
-    },
-    {
-      "title": "MIT Researchers Demonstrate First Fully Photonic Neural Chip for AI Inference at Near-Light Speed",
-      "summary": "The chip uses integrated photonics to perform matrix multiplications optically—achieving 10x lower energy consumption and 100x higher throughput than state-of-the-art GPU accelerators for transformer inference.",
-      "priority": 3,
-      "tags": [
-        "hardware",
-        "photonics",
-        "neuromorphic",
-        "chip-design"
-      ],
-      "date": "2024-04-22"
+      "date": "2026-02-10"
     }
   ],
   "cases": [
     {
-      "title": "Jira AI Assistant",
-      "company": "Atlassian",
-      "industry": "Software Development",
-      "description": "An AI-powered extension for Jira that auto-generates sprint summaries, suggests task priorities, predicts sprint completion risks using historical velocity data, and drafts standup-ready status updates from issue activity.",
-      "impact": "Reduced manual reporting time by 40%, improved sprint goal achievement rate by 22%, and decreased overdue tasks by 18% across enterprise engineering teams."
+      "title": "智项目——AI驱动的敏捷项目管理平台",
+      "company": "阿里云",
+      "industry": "信息技术与软件服务",
+      "description": "阿里云推出的‘智项目’利用NLP和预测分析技术，自动解析需求文档、智能拆解任务、动态优化排期，并通过风险预警模型识别延期与资源瓶颈。",
+      "impact": [
+        "任务分解效率提升40%",
+        "项目延期率降低35%",
+        "跨团队协作沟通成本减少28%"
+      ]
     },
     {
-      "title": "ClickUp AI",
-      "company": "ClickUp",
-      "industry": "Professional Services & Remote Work",
-      "description": "Integrated AI features in ClickUp that convert natural language prompts into tasks, automatically assign owners based on workload and expertise tags, generate project timelines from text briefs, and summarize cross-document project context from linked docs and chats.",
-      "impact": "Cut task creation time by 65%, increased on-time delivery of client projects by 31%, and improved cross-team alignment visibility by consolidating fragmented project intel."
+      "title": "腾讯TAPD智能规划助手",
+      "company": "腾讯",
+      "industry": "互联网与数字内容",
+      "description": "集成于TAPD平台的AI模块，基于历史项目数据训练，可自动生成迭代计划、推荐最优资源分配方案，并实时评估交付健康度。",
+      "impact": [
+        "迭代计划制定时间缩短60%",
+        "资源错配问题下降52%",
+        "关键路径偏差预警准确率达89%"
+      ]
     },
     {
-      "title": "Forecast.app",
-      "company": "Forecast",
-      "industry": "IT Consulting & Digital Agencies",
-      "description": "AI-native project management platform that uses machine learning to forecast resource capacity, recommend optimal team allocations, auto-adjust timelines when scope changes occur, and surface budget-at-risk alerts by correlating time tracking, milestone progress, and financial data.",
-      "impact": "Improved resource utilization by 37%, reduced project margin variance from ±28% to ±9%, and cut planning cycle time from days to under 2 hours per quarter."
+      "title": "钉钉宜搭AI项目管家",
+      "company": "钉钉（阿里巴巴）",
+      "industry": "企业服务与SaaS",
+      "description": "面向中小企业的低代码+AI项目管理工具，支持语音/文本自然语言输入创建任务、自动关联依赖关系、生成可视化甘特图及周报摘要。",
+      "impact": [
+        "非技术人员项目上手时间减少75%",
+        "周报撰写耗时降低90%",
+        "任务遗漏率下降47%"
+      ]
     },
     {
-      "title": "AI-Powered Resource Allocation at Siemens",
-      "company": "Siemens AG",
-      "industry": "Industrial Manufacturing",
-      "description": "Siemens implemented an AI-driven project management platform that forecasts resource demand, optimizes team allocation across global R&D projects, and dynamically adjusts schedules based on real-time progress and skill availability using historical project data and NLP-based task parsing.",
-      "impact": "Reduced average project delivery time by 22%, improved cross-project resource utilization by 35%, and decreased manual scheduling effort by 60%."
-    },
-    {
-      "title": "Predictive Risk Management for Healthcare IT Rollout",
-      "company": "Kaiser Permanente",
-      "industry": "Healthcare",
-      "description": "Kaiser Permanente deployed an AI system integrated with Jira and EHR project workflows to identify early-warning signals of scope creep, timeline slippage, and compliance risks in large-scale digital health initiatives using anomaly detection and risk propensity scoring trained on 200+ prior clinical IT deployments.",
-      "impact": "Achieved 40% reduction in high-severity project risks, accelerated EHR integration timelines by 18%, and improved audit readiness scores by 92%."
-    },
-    {
-      "title": "Autonomous Sprint Planning at Spotify",
-      "company": "Spotify",
-      "industry": "Technology & Media",
-      "description": "Spotify developed an internal AI agent that analyzes backlog items, engineering velocity metrics, team capacity, and dependency graphs to autonomously generate sprint plans, recommend story point adjustments, and simulate outcomes under varying prioritization strategies.",
-      "impact": "Increased sprint goal completion rate from 71% to 94%, reduced sprint planning meeting time by 75%, and improved cross-team alignment on roadmap dependencies."
+      "title": "AI驱动的敏捷项目管理平台在华为研发流程中的应用",
+      "company": "华为技术有限公司",
+      "industry": "信息技术与通信",
+      "description": "华为在其5G基站软件研发中部署了自研AI项目管理平台，集成自然语言处理与预测分析模型，自动解析需求文档、识别任务依赖关系、动态优化迭代排期，并实时预警进度风险。",
+      "impact": [
+        "研发周期缩短18%",
+        "跨团队协作返工率下降32%",
+        "资源调度准确率提升至94%"
+      ]
     }
   ],
   "stats": {
-    "news_count": 10,
-    "case_count": 6
+    "news_count": 3,
+    "case_count": 4
   }
 }
