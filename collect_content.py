@@ -28,83 +28,73 @@ class AINewsCollector:
     def search_and_summarize(self, query, content_type='news', count=10):
         """
         搜索并总结内容
-        
-        Args:
-            query: 搜索查询
-            content_type: 'news' 或 'case'
-            count: 需要的条数
-        
-        Returns:
-            list: 总结后的内容列表
         """
         try:
             # 构建提示词
             if content_type == 'news':
-                prompt = f"""请搜索关于"{query}"的最新AI动态新闻。
+                prompt = f"""请总结关于"{query}"的最新AI领域动态。
 
 要求：
-1. 找到{count}条最重要、最新的AI领域动态
-2. 每条新闻包含：标题、摘要（2-3句话）、重要性级别（高/中）、相关标签
-3. 优先选择对项目管理有影响的AI进展
+1. 找到{count}条最重要、最新的AI领域进展
+2. 每条新闻包含：标题、摘要（2-3句话）、重要性级别（high/medium）、相关标签
+3. 优先选择对项目管理、生产力工具有影响的AI进展
 4. 按重要性排序
 
-请以JSON格式返回，格式如下：
+请严格以JSON格式返回，格式如下：
 [
   {{
     "title": "新闻标题",
-    "summary": "新闻摘要，2-3句话说明要点和影响",
-    "priority": "high" 或 "medium",
+    "summary": "新闻摘要内容",
+    "priority": "high",
     "tags": ["标签1", "标签2"],
-    "date": "2026年2月"
+    "date": "{datetime.now().strftime('%Y年%m月')}"
   }}
 ]
 
-只返回JSON，不要其他文字。"""
+只返回JSON，不要包含任何MarkDown代码块标记或其他文字。"""
             
             else:  # case
-                prompt = f"""请搜索关于"{query}"的实际应用案例。
+                prompt = f"""请列举关于"{query}"的实际应用案例。
 
 要求：
 1. 找到{count}个AI在项目管理中的真实应用案例
 2. 每个案例包含：标题、公司/行业、描述、量化效果
-3. 优先选择有具体数据和效果的案例
-4. 涵盖不同行业（建筑、IT、制造、咨询等）
+3. 优先选择有具体数据支撑的案例
 
-请以JSON格式返回，格式如下：
+请严格以JSON格式返回，格式如下：
 [
   {{
     "title": "案例标题",
     "company": "公司名称",
     "industry": "行业类别",
-    "description": "案例描述，说明如何使用AI，2-3句话",
-    "impact": ["效果1: 提升X%", "效果2: 减少Y%", "效果3: 节省Z元"]
+    "description": "详细描述AI如何应用",
+    "impact": ["效果1", "效果2"]
   }}
 ]
 
-只返回JSON，不要其他文字。"""
+只返回JSON，不要包含任何MarkDown代码块标记或其他文字。"""
             
-            # 调用通义千问API（支持联网搜索）
+            # 调用通义千问API
+            # 注意：此处删除了会导致报错的 enable_search=True 参数
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[
                     {
                         'role': 'system',
-                        'content': '你是一个专业的AI信息分析师，专注于AI+项目管理领域。你可以搜索网络获取最新信息，并用中文总结要点。'
+                        'content': '你是一个专业的AI信息分析师，专注于AI+项目管理领域。请直接返回JSON格式的数据。'
                     },
                     {
                         'role': 'user',
                         'content': prompt
                     }
                 ],
-                temperature=0.7,
-                # 启用联网搜索（通义千问特有功能）
-                enable_search=True
+                temperature=0.7
             )
             
             # 解析响应
             content = response.choices[0].message.content.strip()
             
-            # 尝试提取JSON（去除可能的markdown标记）
+            # 清理可能的 Markdown 标记
             if '```json' in content:
                 content = content.split('```json')[1].split('```')[0].strip()
             elif '```' in content:
@@ -118,10 +108,9 @@ class AINewsCollector:
             
         except json.JSONDecodeError as e:
             print(f"❌ JSON解析错误: {e}")
-            print(f"原始内容: {content[:500]}")
             return []
         except Exception as e:
-            print(f"❌ 搜索失败: {e}")
+            print(f"❌ 运行失败: {e}")
             return []
     
     def collect_ai_news(self):
@@ -129,49 +118,43 @@ class AINewsCollector:
         print("\n📰 开始收集AI动态新闻...")
         all_news = []
         
-        for keyword in config.SEARCH_KEYWORDS['ai_news'][:2]:  # 使用前2个关键词
-            print(f"  🔍 搜索: {keyword}")
-            news = self.search_and_summarize(
-                query=keyword,
-                content_type='news',
-                count=5
-            )
-            all_news.extend(news)
-            time.sleep(2)  # 避免请求过快
+        # 默认从配置中读取关键词，如果没有则使用备用
+        keywords = getattr(config, 'SEARCH_KEYWORDS', {}).get('ai_news', ["AI latest developments", "Project Management AI"])
         
-        # 去重并限制数量
-        unique_news = self._deduplicate(all_news, 'title')
-        return unique_news[:config.NEWS_COUNT]
+        for keyword in keywords[:2]:
+            print(f"  🔍 处理关键词: {keyword}")
+            news = self.search_and_summarize(query=keyword, content_type='news', count=5)
+            all_news.extend(news)
+            time.sleep(1)
+        
+        return self._deduplicate(all_news, 'title')[:10]
     
     def collect_pm_cases(self):
         """收集项目管理案例"""
         print("\n💼 开始收集项目管理案例...")
         all_cases = []
         
-        for keyword in config.SEARCH_KEYWORDS['pm_cases'][:2]:  # 使用前2个关键词
-            print(f"  🔍 搜索: {keyword}")
-            cases = self.search_and_summarize(
-                query=keyword,
-                content_type='case',
-                count=5
-            )
-            all_cases.extend(cases)
-            time.sleep(2)  # 避免请求过快
+        keywords = getattr(config, 'SEARCH_KEYWORDS', {}).get('pm_cases', ["AI project management tools", "AI case study"])
         
-        # 去重并限制数量
-        unique_cases = self._deduplicate(all_cases, 'title')
-        return unique_cases[:config.CASE_COUNT]
+        for keyword in keywords[:2]:
+            print(f"  🔍 处理关键词: {keyword}")
+            cases = self.search_and_summarize(query=keyword, content_type='case', count=5)
+            all_cases.extend(cases)
+            time.sleep(1)
+        
+        return self._deduplicate(all_cases, 'title')[:6]
     
     def _deduplicate(self, items, key):
         """根据指定键去重"""
         seen = set()
         unique = []
         for item in items:
-            if item.get(key) not in seen:
-                seen.add(item.get(key))
+            val = item.get(key)
+            if val not in seen:
+                seen.add(val)
                 unique.append(item)
         return unique
-    
+
     def save_data(self, news, cases, filename='data.json'):
         """保存数据到JSON文件"""
         data = {
@@ -183,10 +166,8 @@ class AINewsCollector:
                 'case_count': len(cases)
             }
         }
-        
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        
         print(f"\n💾 数据已保存到 {filename}")
         return data
 
@@ -196,23 +177,14 @@ def main():
     print("🚀 AI+项目管理信息面板 - 内容更新")
     print("=" * 60)
     
-    # 初始化收集器
     collector = AINewsCollector()
-    
-    # 收集内容
     news = collector.collect_ai_news()
     cases = collector.collect_pm_cases()
+    collector.save_data(news, cases)
     
-    # 保存数据
-    data = collector.save_data(news, cases)
-    
-    print("\n" + "=" * 60)
-    print(f"✅ 更新完成！")
-    print(f"📊 AI动态: {len(news)} 条")
-    print(f"💡 实践案例: {len(cases)} 个")
+    print("\n✅ 更新完成！")
+    print(f"📊 动态: {len(news)} | 案例: {len(cases)}")
     print("=" * 60)
-    
-    return data
 
 if __name__ == '__main__':
     main()
