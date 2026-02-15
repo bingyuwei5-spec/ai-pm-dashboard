@@ -9,7 +9,7 @@ import os
 # ===== 阿里云通义千问 API 配置 =====
 # 请在 GitHub Secrets 中设置 QWEN_API_KEY
 QWEN_API_KEY = os.getenv('QWEN_API_KEY', '')
-QWEN_MODEL = 'qwen-plus'  # 可选: qwen-turbo (便宜), qwen-plus (推荐), qwen-max (最强)
+QWEN_MODEL = 'qwen-max'  # 可选: qwen-turbo (便宜), qwen-plus (推荐), qwen-max (最强)
 QWEN_API_BASE = 'https://dashscope.aliyuncs.com/compatible-mode/v1'
 
 # ===== 内容配置 =====
